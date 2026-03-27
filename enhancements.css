@@ -1,0 +1,462 @@
+/* ═══════════════════════════════════════════════════════════════
+   AMPLIFY HEALTH — DESIGN ENHANCEMENTS v2.0
+   Inspired by claude-cookbooks brand guidelines methodology
+   Adds: premium micro-interactions, animated counters, particle
+   canvas, scroll-progress bar, typewriter effect, glassmorphism
+   refinements, hover depth, focus states, and accessibility.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── SCROLL PROGRESS BAR ─────────────────────────────────────── */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--sage-muted), var(--bronze-light));
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(201, 164, 122, 0.4);
+}
+
+/* ── PARTICLE CANVAS ─────────────────────────────────────────── */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+/* ── CURSOR GLOW (desktop only) ──────────────────────────────── */
+#cursor-glow {
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(166, 124, 82, 0.04) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+@media (hover: hover) {
+  #cursor-glow { opacity: 1; }
+}
+
+/* ── ENHANCED NAV ────────────────────────────────────────────── */
+nav {
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+nav.scrolled {
+  box-shadow: 0 1px 60px rgba(0, 0, 0, 0.4),
+              0 0 0 1px rgba(166, 124, 82, 0.08) !important;
+}
+
+/* Nav logo pulse on load */
+nav .logo {
+  animation: logoReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes logoReveal {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── HERO TYPEWRITER CURSOR ──────────────────────────────────── */
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background: var(--bronze-light);
+  margin-left: 3px;
+  vertical-align: middle;
+  border-radius: 2px;
+  animation: cursorBlink 1.1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── HERO BADGE ENHANCED ─────────────────────────────────────── */
+.hero-badge .dot {
+  box-shadow: 0 0 0 0 rgba(122, 155, 109, 0.4);
+  animation: breathe 3s ease-in-out infinite,
+             dotPulse 2.5s ease-out infinite !important;
+}
+
+@keyframes dotPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(122, 155, 109, 0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(122, 155, 109, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(122, 155, 109, 0); }
+}
+
+/* ── ANIMATED STAT COUNTERS ──────────────────────────────────── */
+.stat-number[data-count] {
+  transition: color 0.3s ease;
+}
+
+/* ── CARD HOVER DEPTH SYSTEM ─────────────────────────────────── */
+.card-solid {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.45s ease !important;
+  will-change: transform;
+}
+
+.card-solid:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35),
+              0 0 0 1px rgba(166, 124, 82, 0.12),
+              inset 0 1px 0 rgba(247, 245, 240, 0.04) !important;
+  border-color: rgba(166, 124, 82, 0.15) !important;
+}
+
+/* Avatar items — staggered lift */
+.avatar-item.card-solid:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(122, 155, 109, 0.2) !important;
+}
+
+/* Pillar cards — icon glow on hover */
+.pillar-card.card-solid:hover .pillar-icon {
+  background: rgba(122, 155, 109, 0.12) !important;
+  border-color: rgba(122, 155, 109, 0.25) !important;
+  box-shadow: 0 0 18px rgba(122, 155, 109, 0.15);
+  transform: scale(1.08);
+  transition: all 0.4s ease;
+}
+
+/* FAQ items — subtle left border reveal */
+.faq-item.card-solid {
+  border-left: 2px solid transparent !important;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.45s ease,
+              border-left-color 0.45s ease !important;
+}
+
+.faq-item.card-solid:hover {
+  border-left-color: rgba(166, 124, 82, 0.35) !important;
+}
+
+/* ── BUTTON ENHANCEMENTS ─────────────────────────────────────── */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.12) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-primary:hover::after {
+  transform: translateX(100%);
+}
+
+/* CTA button ripple */
+.btn-primary:active {
+  transform: scale(0.97) translateY(0) !important;
+  transition: transform 0.1s ease !important;
+}
+
+/* ── TIMELINE ENHANCEMENTS ───────────────────────────────────── */
+.timeline::before {
+  background: linear-gradient(to bottom,
+    var(--sage-muted),
+    var(--bronze),
+    var(--sage-muted),
+    transparent) !important;
+  animation: timelineFlow 6s ease-in-out infinite;
+}
+
+@keyframes timelineFlow {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.5; }
+}
+
+.timeline-item {
+  position: relative;
+}
+
+/* Module number badge */
+.module-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.module-num::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sage);
+  transition: background 0.3s ease;
+}
+
+.timeline-item:hover .module-num::before {
+  background: var(--bronze-light);
+}
+
+/* ── SCORE CIRCLE ANIMATION ──────────────────────────────────── */
+.score-circle {
+  position: relative;
+  overflow: visible !important;
+}
+
+.score-circle::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(166, 124, 82, 0.15);
+  animation: scoreRingPulse 3s ease-in-out infinite;
+}
+
+@keyframes scoreRingPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%       { transform: scale(1.06); opacity: 0.2; }
+}
+
+/* ── LAUDO CARD ENHANCED ─────────────────────────────────────── */
+.laudo-card {
+  transition: box-shadow 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.laudo-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4),
+              0 0 0 1px rgba(166, 124, 82, 0.2),
+              inset 0 1px 0 rgba(247, 245, 240, 0.05) !important;
+}
+
+/* ── COMPARISON TABLE ENHANCEMENTS ──────────────────────────── */
+.comp-table tbody tr {
+  transition: background 0.25s ease;
+}
+
+.comp-table tbody tr:hover {
+  background: rgba(166, 124, 82, 0.04);
+}
+
+.comp-table tbody tr:hover td:last-child {
+  color: var(--bronze-light) !important;
+}
+
+/* ── AUTHOR CARD PHOTO ───────────────────────────────────────── */
+.author-photo {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.5s ease,
+              border-color 0.5s ease !important;
+}
+
+.author-card:hover .author-photo {
+  transform: scale(1.03) !important;
+  border-color: rgba(166, 124, 82, 0.45) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+              0 0 30px rgba(166, 124, 82, 0.12) !important;
+}
+
+/* ── SAIM PROOF BLOCK ────────────────────────────────────────── */
+.saim-proof {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.45s ease !important;
+}
+
+.saim-proof::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(122, 155, 109, 0.3),
+    rgba(166, 124, 82, 0.3),
+    transparent);
+}
+
+.saim-proof:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ── CTA FINAL CARD ──────────────────────────────────────────── */
+#cta-final .cta-card {
+  position: relative;
+  transition: box-shadow 0.5s ease !important;
+}
+
+#cta-final .cta-card:hover {
+  box-shadow: 0 0 80px rgba(166, 124, 82, 0.08),
+              inset 0 0 60px rgba(166, 124, 82, 0.03) !important;
+}
+
+/* ── SECTION LABEL ENHANCED ──────────────────────────────────── */
+/*
+ * O section-label usa display:inline-block para o efeito de sublinhado
+ * via ::after. Quando o pai tem text-align:center (seção #laudo),
+ * o inline-block é centralizado automaticamente pelo fluxo normal.
+ * Não precisamos de left/transform — apenas garantimos que o ::after
+ * parta do centro quando o label estiver centralizado.
+ */
+.section-label {
+  position: relative;
+  display: inline-block;
+}
+
+/* Sublinhado animado — parte da esquerda para labels alinhados à esquerda */
+.section-label::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--sage);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Centraliza o section-label na seção #laudo (que usa text-align:center no HTML) */
+#laudo .section-label {
+  display: block;
+  text-align: center;
+}
+
+/* Sublinhado centralizado para o label do laudo */
+#laudo .section-label::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.section-label.visible::after,
+.reveal.visible + .section-label::after {
+  width: 100%;
+}
+
+/* Trigger when parent section is in view */
+.reveal.visible ~ * .section-label::after,
+.section-label.in-view::after {
+  width: 100%;
+}
+
+/* ── DELIVERABLE BADGE HOVER ─────────────────────────────────── */
+.deliverable {
+  transition: all 0.3s ease !important;
+  cursor: default;
+}
+
+.timeline-item:hover .deliverable {
+  background: rgba(122, 155, 109, 0.14) !important;
+  border-color: rgba(122, 155, 109, 0.25) !important;
+  color: var(--sage) !important;
+  transform: translateX(4px);
+}
+
+/* ── FOOTER ENHANCED ─────────────────────────────────────────── */
+footer {
+  position: relative;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(166, 124, 82, 0.3),
+    transparent);
+}
+
+/* ── FOCUS ACCESSIBILITY ─────────────────────────────────────── */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── SMOOTH SECTION TRANSITIONS ──────────────────────────────── */
+section {
+  position: relative;
+}
+
+/* ── STAT CARD NUMBER GLOW ───────────────────────────────────── */
+.stat-number {
+  transition: text-shadow 0.4s ease;
+}
+
+.stat-card:hover .stat-number {
+  text-shadow: 0 0 30px rgba(166, 124, 82, 0.25);
+}
+
+/* ── AVATAR ITEM ICON ────────────────────────────────────────── */
+.avatar-item .icon {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              color 0.3s ease;
+}
+
+.avatar-item:hover .icon {
+  transform: scale(1.2);
+  color: var(--bronze-light);
+}
+
+/* ── GLASS CARD REFINEMENT ───────────────────────────────────── */
+.card-elevated {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.45s ease !important;
+}
+
+.card-elevated:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ── LOADING SHIMMER ON REVEAL ───────────────────────────────── */
+@keyframes shimmerReveal {
+  from {
+    background-position: -200% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* ── MOBILE REFINEMENTS ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  #cursor-glow { display: none; }
+  .card-solid:hover { transform: none !important; }
+  .laudo-card:hover { transform: none !important; }
+  .author-card:hover .author-photo { transform: none !important; }
+}
+
+/* ── REDUCED MOTION RESPECT ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  #particle-canvas { display: none; }
+  #scroll-progress { display: none; }
+}
